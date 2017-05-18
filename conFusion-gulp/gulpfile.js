@@ -31,10 +31,9 @@ gulp.task('usemin',['jshint'], function () {
     .pipe(usemin({
       css:[minifycss(),rev()],
       js: [ngannotate(),uglify(),rev()]
-    }))
-    
-    .pipe(gulp.dest('dist/'));
+    })).pipe(gulp.dest('dist/'));
 });
+
 // Images
 gulp.task('imagemin', function() {
   return del(['dist/images']), gulp.src('app/images/**/*')
