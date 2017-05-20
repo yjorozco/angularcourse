@@ -80,7 +80,6 @@ angular.module('confusionApp', []).controller('MenuController', ['$scope', funct
 }]).controller('FeedbackController', ['$scope', function($scope) {
 
             $scope.sendFeedback = function() {
-              console.log($scope.feedback);
               if ($scope.feedback.agree && ($scope.feedback.mychannel == "")&& !$scope.feedback.mychannel) {
                     $scope.invalidChannelSelection = true;
                     console.log('incorrect');
@@ -96,4 +95,89 @@ angular.module('confusionApp', []).controller('MenuController', ['$scope', funct
                 }
             };
 
-}]);
+}]).controller('DishDetailController', ['$scope', function($scope) {
+
+           $scope.oderBy="rating";
+
+           var dish={
+                          name:'Uthapizza',
+                          image: 'images/uthapizza.png',
+                          category: 'mains', 
+                          label:'Hot',
+                          price:'4.99',
+                          description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.',
+                           comments: [
+                               {
+                                   rating:5,
+                                   comment:"Imagine all the eatables, living in conFusion!",
+                                   author:"John Lemon",
+                                   date:"2012-10-16T17:57:28.556094Z"
+                               },
+                               {
+                                   rating:4,
+                                   comment:"Sends anyone to heaven, I wish I could get my mother-in-law to eat it!",
+                                   author:"Paul McVites",
+                                   date:"2014-09-05T17:57:28.556094Z"
+                               },
+                               {
+                                   rating:3,
+                                   comment:"Eat it, just eat it!",
+                                   author:"Michael Jaikishan",
+                                   date:"2015-02-13T17:57:28.556094Z"
+                               },
+                               {
+                                   rating:4,
+                                   comment:"Ultimate, Reaching for the stars!",
+                                   author:"Ringo Starry",
+                                   date:"2013-12-02T17:57:28.556094Z"
+                               },
+                               {
+                                   rating:2,
+                                   comment:"It's your birthday, we're gonna party!",
+                                   author:"25 Cent",
+                                   date:"2011-12-02T17:57:28.556094Z"
+                               }
+                               
+                           ]
+                    }; 
+
+          $scope.dish=dish;          
+            
+     }]).controller('DishFormController', ['$scope', function($scope) {
+
+            $scope.start="5";
+            $scope.comments="";
+            $scope.name="";
+            $scope.showcomments=false;
+            var dishComments=[];
+
+            
+            $scope.sendDish=function(){
+
+                if($scope.comments!=""){
+                    dishComments=$scope.dish.comments;
+                    var commentObject= {
+                                   rating:$scope.start,
+                                   comment:$scope.comments,
+                                   author:$scope.name,
+                                   date:new Date()
+                               };
+                    dishComments.push(commentObject);
+                    $scope.dish.comments=dishComments;
+                    $scope.showcomments=false;
+                    $scope.start="5";
+                    $scope.comments="";
+                    $scope.name="";
+                    $scope.dishForm.$setPristine();
+                }
+            }
+
+            $scope.commentsChange=function() {              
+              if($scope.comments!=""){
+                  $scope.showcomments=true;
+              }else{
+                  $scope.showcomments=false;
+              }
+
+            }
+     }]);
