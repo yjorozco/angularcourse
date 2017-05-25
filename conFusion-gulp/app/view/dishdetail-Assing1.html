@@ -1,0 +1,80 @@
+    <div class="container">
+        <div class="row row-content"  ng-controller="DishDetailController">
+            <div class="col-xs-12">
+                  <button class="btn btn-xs btn-primary pull-right"
+                    type="button" ui-sref="app.menu">
+                    Back to Menu
+                  </button>
+                    <div class="media-left media-middle">
+                        <a href="#">
+                        <img class="media-object img-thumbnail"
+                         ng-src={{dish.image}} alt="Uthappizza">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h2 class="media-heading">{{dish.name}}
+                         <span class="label label-danger">{{dish.label}}</span>
+                         <span class="badge">{{dish.price | currency}}</span></h2>
+                        <p>{{dish.description}}</p>
+                    </div>
+                </li>
+            <div class="col-xs-9 col-xs-offset-1">
+                <p><h4>Customer Comments </h4> <cite>Sort by</cite> <input type="text"  ng-model="orderBy"></p>
+                <div ng-repeat="comment in dish.comments | orderBy:  orderBy">
+                  <blockquote>
+                    <p>{{comment.rating}}</p>
+                    <p>{{comment.comment}}</p>
+                    <footer><cite>{{comment.author}}</cite>, {{comment.date|date:'MMM d, y'}} </footer>
+                  </blockquote>
+                </div>
+            </div>
+         <div  ng-controller="DishFormController">
+            <div class="col-xs-9 col-xs-offset-1" ng-show="showcomments"> 
+                      <blockquote>
+                        <p>{{start}}</p>
+                        <p>{{comments}}</p>
+                        <footer><cite>{{name}}</cite></footer>
+                      </blockquote>
+            </div>
+             <div class="col-xs-12">
+
+                <form class="form-horizontal" name="dishForm" ng-submit="sendDish()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : dishForm.name.$error.required && !dishForm.name.$pristine }">
+                        <label for="name" class="col-sm-2 control-label">Your Name</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name"
+                          ng-model="name" required>
+                        </div>
+                        <span ng-show="dishForm.name.$error.required && !dishForm.name.$pristine" class="help-block">Your Name is required.</span>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error' : dishForm.stars.$error.required && !dishForm.stars.$pristine }">
+                        <label for="start" class="col-sm-2 control-label">Number of Stars</label>
+                        <div class="col-sm-10">
+                          <div class="col-sm-1"><input type="radio" ng-model="start" value="1">1</input></div>
+                          <div class="col-sm-1"><input type="radio" ng-model="start" value="2">2</input></div>
+                          <div class="col-sm-1"><input type="radio" ng-model="start" value="3">3</input></div>
+                          <div class="col-sm-1"><input type="radio" ng-model="start" value="4">4</input></div>
+                          <div class="col-sm-1"><input type="radio" ng-checked="true" ng-model="start" value="5">5</input></div>
+                        </div>
+                    </div>         
+                    <div class="form-group" ng-class="{ 'has-error' : dishForm.comments.$error.required && !dishForm.comments.$pristine }">
+                        <label for="comments" class="col-sm-2 control-label">Your Feedback</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="12" id="comments" name="comments"
+                                ng-model="comments" ng-change="commentsChange()" required>
+                            </textarea>
+                            <span ng-show="dishForm.comments.$error.required && !dishForm.comments.$pristine" class="help-block">Comment is required.</span>
+                        </div>
+                    </div>  
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" ng-disabled="dishForm.$invalid">Send Feedback</button>
+                        </div>
+
+                    </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>

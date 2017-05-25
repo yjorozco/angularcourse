@@ -1,5 +1,9 @@
 'use strict';
-angular.module('confusionApp').controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+angular.module('confusionApp')
+.controller('IndexController', ['$scope', function($scope) {
+
+}])
+.controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
       $scope.tab = 1;
       $scope.filtText = '';
       $scope.showDetails = false;
@@ -53,9 +57,9 @@ angular.module('confusionApp').controller('MenuController', ['$scope', 'menuFact
                 }
             };
 
-}]).controller('DishDetailController', ['$scope', '$routeParams', 'menuFactory', function($scope, $routeParams, menuFactory) {
+}]).controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
             $scope.oderBy="rating";
-            var dish= menuFactory.getDish(parseInt($routeParams.id,10));
+            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
             $scope.dish = dish;
 }]).controller('DishFormController', ['$scope', function($scope) {
 
